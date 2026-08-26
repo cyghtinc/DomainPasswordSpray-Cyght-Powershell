@@ -35,7 +35,7 @@ This command will write the domain user list without disabled accounts or accoun
 ```PowerShell
 Get-DomainUserList -Domain domainname -RemoveDisabled -RemovePotentialLockouts | Out-File -Encoding ascii userlist.txt
 ```
-# DirectoryAuthAudit.ps1 
+# DirectoryAuthAudit.ps1 Obfuscated Version 
 
 ```powershell
 # dot source code
